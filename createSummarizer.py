@@ -1,7 +1,18 @@
-from transformers import pipeline
+import os
+import openai
 
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+openai.api_key = "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"
 
 
-def createSummarizer(article):
-    return summarizer(article, max_length=130, min_length=30, do_sample=False)
+def createSummarizer(prompt):
+    response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=prompt,
+        temperature=0.7,
+        max_tokens=256,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+    return response.choices[0].text
+
