@@ -1,7 +1,7 @@
 import os
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 def createSummarizer(prompt):
