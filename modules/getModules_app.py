@@ -13,7 +13,7 @@ def getModules():
 
     #  Import all modules from __all__ list
     for module_name in __all__:
-        if module_name != "app":
+        if module_name != "getModules_app":
             # module = importlib.import_module(__import__(module_name))
             # globals()[module_name] = importlib.import_module(module_name)
             functions = getmembers(__import__(module_name), isfunction)
