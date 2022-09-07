@@ -9,5 +9,5 @@ custom_req=$(cat modules/requirements.txt | grep -v '^#' | grep -v '^$' | cut -d
 auto_req=$(cat requirements.txt | grep -v '^#' | grep -v '^$' | cut -d'=' -f1)
 
 # write custom_req auto_req to a file
-echo "$custom_req $auto_req" > requirements.txt
+echo "$custom_req\n$auto_req" > requirements.txt
 
