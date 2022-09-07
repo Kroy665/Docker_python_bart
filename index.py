@@ -3,7 +3,7 @@ import sys
 sys.path.insert(1, 'modules')
 from flask_cors import CORS
 from createSummarizer import createSummarizer
-from modules.app import *
+from modules.getModules_app import *
 
 
 
