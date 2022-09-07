@@ -27,11 +27,13 @@ def customFunction():
     if request.method == 'POST':
         routeCalled = request.args.get('routeCalled')
         prompt = request.args.get('prompt')
-        print(routeCalled)
+        print("routeCalled::",routeCalled)
         for func in allFunction:
             if func[0] == routeCalled:
                 print(func[1])
-                return func[1](prompt)
+                retureValue = func[1](prompt)
+                print("retureValue::",retureValue)
+                return retureValue
     else:
         return "Invalid request"
         
