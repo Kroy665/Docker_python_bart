@@ -14,6 +14,7 @@ RUN python -m pip install --upgrade pip
 
 RUN pip install pipreqs
 RUN pipreqs . --force
+RUN sh install.sh
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
