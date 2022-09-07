@@ -18,7 +18,7 @@ for module in getModules():
     for mod in module.keys():
         # print(mod)
         for func in module[mod]:
-            # print(func[1].__name__)
+            print("Function Name::",func[1].__name__)
             allFunction.append(func)
 
 # http://localhost:6000/api/v1/custom-function?routeCalled={Function_name}&prompt={prompt}
