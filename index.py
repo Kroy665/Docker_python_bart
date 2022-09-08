@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 import sys
+import os
+import requests
 sys.path.insert(1, 'modules')
 from flask_cors import CORS
 from modules.getModules_app import *
@@ -21,19 +23,54 @@ for module in getModules():
             print("Function Name::",func[1].__name__)
             allFunction.append(func)
 
+DATABASE_API = os.getenv('DATABASE_API')
+
+
+
+def getAuth(authToken):
+    url = DATABASE_API+"/api/users/me"
+    payload={}
+    headers = {
+        'Authorization': 'Bearer '+authToken
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    if(response.status_code == 200):
+        return {
+            "user":response.json(),
+            "auth":True
+        }
+    else:
+        return {
+            "user":None,
+            "auth":False
+        }
+
 # http://localhost:6000/api/v1/custom-function?routeCalled={Function_name}&prompt={prompt}
 @app.route(endpoint + '/custom-function', methods=['GET','POST'])
 def customFunction():
     if request.method == 'POST':
-        routeCalled = request.args.get('routeCalled')
-        prompt = request.args.get('prompt')
-        print("routeCalled::",routeCalled)
-        for func in allFunction:
-            if func[0] == routeCalled:
-                print(func[1])
-                retureValue = func[1](prompt)
-                print("retureValue::",retureValue)
-                return retureValue
+        if "Authorization" in request.headers:
+            token = request.headers["Authorization"].split(" ")[1]
+            user = getAuth(token)
+            if(user["auth"]):
+                routeCalled = request.args.get('routeCalled')
+                prompt = request.args.get('prompt')
+                print("routeCalled::",routeCalled)
+                for func in allFunction:
+                    if func[0] == routeCalled:
+                        print(func[1])
+                        retureValue = func[1](prompt)
+                        print("retureValue::",retureValue)
+                        return retureValue
+            else: 
+                return jsonify({
+                    "message":"Unauthorized"
+                }),401
+        else:
+            return jsonify({
+                "message":"Token not found"
+            }),401
     else:
         return "Invalid request"
         

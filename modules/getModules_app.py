@@ -23,6 +23,15 @@ def getModules():
             # print(main)
     # print(allModules) 
 
+    # write a txt file for allModules
+    with open('allModules.txt', 'w') as f:
+        for module in allModules:
+            for mod in module.keys():
+                for func in module[mod]:
+                    f.write(func[1].__name__+"\n")
+
+
+
     return allModules
 
     # for modules in allModules:
