@@ -18,6 +18,6 @@ RUN pipreqs . --force
 RUN sh install.sh
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 6000
 CMD [ "python3", "./index.py" ]            
                 
